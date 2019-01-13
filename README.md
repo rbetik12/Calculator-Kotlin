@@ -1,7 +1,8 @@
-WIP
+**WIP**
+
 Calculator for an android(SDK 27-28)
 
-TO DO:
+**TO DO**:
 1. Make round algorithm
 2. Make output match editText scale (auto font size changing)
 3. Add branches buttons
@@ -14,5 +15,5 @@ TO DO:
 
 
 
-(Long plans)
+*(Long plans)*
 1. Add graphing
