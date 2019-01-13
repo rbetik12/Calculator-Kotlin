@@ -2,8 +2,8 @@ WIP
 Calculator for an android(SDK 27-28)
 
 TO DO:
-    1. Make round algorithm
-    2. Make output match editText scale (auto font size changing)
+    1. Make round algorithm\n
+    2. Make output match editText scale (auto font size changing)/n
     3. Add branches buttons
     4. Add pow and sqrt functions
     5. Add clear and CE buttons
