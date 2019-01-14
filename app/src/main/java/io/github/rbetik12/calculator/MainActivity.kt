@@ -20,6 +20,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClickNumbers(view: View) {
+        /**
+         * Gets an input symbols and adds it to equation variable
+         * @param view App main window
+         * @return nothing
+         */
         when (view.id) {
             R.id.buttonZero -> {
                 equation += "0"
@@ -51,11 +56,19 @@ class MainActivity : AppCompatActivity() {
             R.id.buttonNine -> {
                 equation += "9"
             }
+            R.id.buttonPoint -> {
+                equation += "."
+            }
         }
         resultEquation.setText(equation)
     }
 
     fun onClickFunctions(view: View) {
+        /**
+         * Gets an input function(plus, minus, cos, etc.) and adds it to equation variable
+         * @param view App main window
+         * @return nothing
+         */
         when (view.id) {
             R.id.buttonAdd -> {
                 equation += "+"
@@ -74,6 +87,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClickUtils(view: View){
+        /**
+         * Gets an input and does some utility thing, like cleaning the output or solving the equation
+         * @param view
+         * @return nothing
+         */
         when(view.id){
             R.id.buttonEquals -> {
                 try{
@@ -95,6 +113,15 @@ class MainActivity : AppCompatActivity() {
                     resultEquation.setText(result.toString())
                     Log.d("OUTPUT", "Result is $result now")
                 }
+            }
+            R.id.buttonClearEverything -> {
+                equation = ""
+                result = 0.0
+                resultEquation.setText(null)
+            }
+            R.id.buttonClear -> {
+                equation = equation.substring(0, equation.length - 1)
+                resultEquation.setText(equation)
             }
         }
     }

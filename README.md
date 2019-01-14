@@ -3,17 +3,17 @@
 Calculator for an android(SDK 27-28)
 
 **TO DO**:
-1. Make round algorithm
-2. Make output match editText scale (auto font size changing)
-3. Add branches buttons
-4. Add pow and sqrt functions
-5. Add clear and CE buttons
-6. Add point button
-7. Add zero division exceptions catcher (recent doesn't work)
-8. Make a pretty GUI
+- Make round algorithm
+- Make output match editText scale (auto font size changing)
+- Add branches buttons
+- Add pow and sqrt functions
+- ~~Add clear and CE buttons~~
+- ~~Add point button~~
+- Add equation exceptions catcher (recent doesn't work)
+- Make a pretty GUI
 
 
 
 
 *(Long plans)*
-1. Add graphing
+- Add graphing
