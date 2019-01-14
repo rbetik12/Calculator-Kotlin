@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.HorizontalScrollView
 import net.objecthunter.exp4j.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Math.abs
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         resultEquation.setText(equation)
+        scrollLeft()
     }
 
     fun onClickFunctions(view: View) {
@@ -89,6 +91,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         resultEquation.setText(equation)
+        scrollLeft()
     }
 
     fun onClickUtils(view: View){
@@ -109,11 +112,16 @@ class MainActivity : AppCompatActivity() {
                 }
                 result = expression.evaluate()
                 val isInt: Boolean = checkForInt(result)
+
                 if (isInt){
-                    resultEquation.setText(result.toString())
+                    resultEquation.setText(result.toInt().toString())
+                    equation = result.toInt().toString()
                     return
                 }
-                setOutput(result)
+                else {
+                    setOutput(result)
+                    equation = result.toString()
+                }
             }
             R.id.buttonClearEverything -> {
                 equation = ""
@@ -147,19 +155,23 @@ class MainActivity : AppCompatActivity() {
          */
         val resultToStr: String = result.toString()
 
-        Log.d("OUTPUT","Result is $result")
-        Log.d("OUTPUT", "ResultStr is $resultToStr")
         if (resultToStr.length > MAX_OUTPUT_LENGTH && resultToStr.indexOf("E") != -1){
-            Log.d("OUTPUT", "lmao")
             val exp: Double = abs(resultToStr.substring(resultToStr.indexOf("E") + 1, resultToStr.lastIndex + 1).toDouble())
-            Log.d("OUTPUT","Exp is $exp")
             var tempResult: Double = result
+
             tempResult = Math.round(tempResult * pow(10.0, exp + MAX_SYMBOLS_IN_DOUBLE_WEXP)) / pow(10.0, exp + MAX_SYMBOLS_IN_DOUBLE_WEXP)
-            Log.d("OUTPUT","Tempresult is $tempResult")
             resultEquation.setText(tempResult.toString())
         }
         else
             resultEquation.setText(resultToStr)
+    }
+    private fun scrollLeft(){
+        /**
+         * Shifts content of editText to the right, when called
+         * @params none
+         * @return nothing
+         */
+        scroll.post(Runnable { scroll.fullScroll(View.FOCUS_RIGHT) })
     }
 }
 
