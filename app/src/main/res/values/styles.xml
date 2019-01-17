@@ -13,4 +13,37 @@
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="NumberButtonStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">0.5dp</item>
+        <item name="android:onClick">onClickNumbers</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:background">@drawable/button</item>
+    </style>
+
+    <style name="FunctionButtonStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">0.5dp</item>
+        <item name="android:onClick">onClickFunctions</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:background">@drawable/button</item>
+    </style>
+
+    <style name="UtilsButtonStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">0.5dp</item>
+        <item name="android:onClick">onClickUtils</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:background">@drawable/button</item>
+    </style>
+
 </resources>

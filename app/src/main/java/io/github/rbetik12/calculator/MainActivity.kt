@@ -2,14 +2,13 @@ package io.github.rbetik12.calculator
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.HorizontalScrollView
 import net.objecthunter.exp4j.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.ArithmeticException
+import java.lang.IllegalArgumentException
 import java.lang.Math.abs
 import java.lang.Math.pow
-import kotlin.math.round
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,7 +17,8 @@ class MainActivity : AppCompatActivity() {
     private var result: Double = 0.0
     private lateinit var expression: Expression
     private val MAX_OUTPUT_LENGTH: Int = 19
-    private val MAX_SYMBOLS_IN_DOUBLE_WEXP: Int = 7
+    private val MAX_SYMBOLS_IN_DOUBLE_WEXP: Int = 9
+    private val functions = arrayListOf<String>("+", "-", "*", "/")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +65,17 @@ class MainActivity : AppCompatActivity() {
             R.id.buttonPoint -> {
                 equation += "."
             }
+            R.id.buttonLeftPar -> {
+                equation += "("
+            }
+            R.id.buttonRightPar -> {
+                equation += ")"
+            }
         }
         resultEquation.setText(equation)
         scrollLeft()
+        if (findFunc())
+            count()
     }
 
     fun onClickFunctions(view: View) {
@@ -92,6 +100,7 @@ class MainActivity : AppCompatActivity() {
         }
         resultEquation.setText(equation)
         scrollLeft()
+        count()
     }
 
     fun onClickUtils(view: View){
@@ -102,39 +111,23 @@ class MainActivity : AppCompatActivity() {
          */
         when(view.id){
             R.id.buttonEquals -> {
-                try{
-                     expression = ExpressionBuilder(equation).build()
-                }
-                catch (e: ArithmeticException){
-                    resultEquation.setText("Error")
-                    equation = ""
-                    return
-                }
-                result = expression.evaluate()
-                val isInt: Boolean = checkForInt(result)
-
-                if (isInt){
-                    resultEquation.setText(result.toInt().toString())
-                    equation = result.toInt().toString()
-                    return
-                }
-                else {
-                    setOutput(result)
-                    equation = result.toString()
-                }
+                count(true)
+                midResultEquation.text = null
             }
             R.id.buttonClearEverything -> {
                 equation = ""
                 result = 0.0
                 resultEquation.text = null
+                midResultEquation.text = null
             }
             R.id.buttonClear -> {
                 equation = equation.substring(0, equation.length - 1)
                 resultEquation.setText(equation)
+                count()
             }
         }
     }
-    private fun checkForInt(result: Double): Boolean{
+    private fun checkForInt(): Boolean{
         /**
          * Checks if result can be put in output as integer(e.g. 12.0 -> 12)
          * @param [result] Result of equation
@@ -147,23 +140,18 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    private fun setOutput(result: Double){
+    private fun roundResult(){
         /**
-         * Rounds double result, if it contains lots of digits with exponent
-         * @param result
+         * Rounds double result, if it contains lots of digits with exponent.
          * @return nothing
          */
         val resultToStr: String = result.toString()
 
         if (resultToStr.length > MAX_OUTPUT_LENGTH && resultToStr.indexOf("E") != -1){
             val exp: Double = abs(resultToStr.substring(resultToStr.indexOf("E") + 1, resultToStr.lastIndex + 1).toDouble())
-            var tempResult: Double = result
 
-            tempResult = Math.round(tempResult * pow(10.0, exp + MAX_SYMBOLS_IN_DOUBLE_WEXP)) / pow(10.0, exp + MAX_SYMBOLS_IN_DOUBLE_WEXP)
-            resultEquation.setText(tempResult.toString())
+            result = Math.round(result * pow(10.0, exp + MAX_SYMBOLS_IN_DOUBLE_WEXP)) / pow(10.0, exp + MAX_SYMBOLS_IN_DOUBLE_WEXP)
         }
-        else
-            resultEquation.setText(resultToStr)
     }
     private fun scrollLeft(){
         /**
@@ -172,6 +160,66 @@ class MainActivity : AppCompatActivity() {
          * @return nothing
          */
         scroll.post(Runnable { scroll.fullScroll(View.FOCUS_RIGHT) })
+    }
+
+    private fun count(isEqualsPressed: Boolean = false){
+        /**
+         * Counts the expression result, catches possible exceptions
+         */
+        expression = ExpressionBuilder(equation).build()
+        try {
+            result = expression.evaluate()
+        }
+        catch(e:IllegalArgumentException){
+            if (isEqualsPressed) {
+                midResultEquation.text = null
+                equation = ""
+                setOutput(isEqualsPressed)
+            }
+            return
+        }
+        catch(e:ArithmeticException){
+            equation = ""
+            result = 0.0
+            return
+        }
+        setOutput(isEqualsPressed)
+    }
+
+    private fun setOutput(isEqualsPressed: Boolean){
+        /**
+         * Set output, whether equal button was pressed or not
+         */
+        var strResult: String = ""
+
+        if (checkForInt())
+            strResult = result.toInt().toString()
+        else {
+            roundResult()
+            strResult = result.toString()
+        }
+
+        if (isEqualsPressed){
+            resultEquation.setText(strResult)
+            equation = strResult
+        }
+        else{
+            midResultEquation.setText(strResult)
+        }
+    }
+
+    private fun findFunc(): Boolean{
+        /**
+         * Finds functions in equation string. Returns true if function was find or false
+         * @return boolean
+         */
+        for (i in  0 until equation.length){
+            for(j in 0 until functions.size){
+                if (equation[i].toString() == functions[j])
+                    return true
+            }
+        }
+        return false
     }
 }
 

@@ -18,4 +18,6 @@
     <string name="buttonClear">Clear</string>
     <string name="buttonClearEverything">CE</string>
     <string name="buttonPoint">.</string>
+    <string name="leftPar">(</string>
+    <string name="rightPar">)</string>
 </resources>
