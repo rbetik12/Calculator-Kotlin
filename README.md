@@ -1,6 +1,6 @@
 **WIP**
 
-Calculator for an android(SDK 27-28)
+Calculator for android OS (SDK 27-28)
 
 **TO DO**:
 - ~~Make round algorithm~~
