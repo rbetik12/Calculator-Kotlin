@@ -14,11 +14,5 @@ Calculator for android OS (SDK 27-28)
 - Add cos/sin/etc. functions
 - Choose more delightful colour scheme
 
-**KNOWN BUGS**:
-- Exception catcher sometimes cause application crashes
-- Parentheses buttons sometimes crashes app
-
-
-
 *(Long-term plans)*
 - Add graphing
