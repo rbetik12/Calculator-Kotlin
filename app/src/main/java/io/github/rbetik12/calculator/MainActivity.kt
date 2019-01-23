@@ -121,7 +121,12 @@ class MainActivity : AppCompatActivity() {
                 midResultEquation.text = null
             }
             R.id.buttonClear -> {
-                equation = equation.substring(0, equation.length - 1)
+                if (equation.length == 1)
+                    midResultEquation.setText("")
+                equation = when(equation.length){
+                    0, 1 -> ""
+                    else -> equation.substring(0, equation.length - 1)
+                }
                 resultEquation.setText(equation)
                 count()
             }
@@ -166,7 +171,14 @@ class MainActivity : AppCompatActivity() {
         /**
          * Counts the expression result, catches possible exceptions
          */
-        expression = ExpressionBuilder(equation).build()
+
+        try {
+            expression = ExpressionBuilder(equation).build()
+        }
+        catch(e: IllegalArgumentException){
+            return
+        }
+
         try {
             result = expression.evaluate()
         }
