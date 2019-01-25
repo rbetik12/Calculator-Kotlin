@@ -9,6 +9,7 @@ import java.lang.ArithmeticException
 import java.lang.IllegalArgumentException
 import java.lang.Math.abs
 import java.lang.Math.pow
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -176,6 +177,9 @@ class MainActivity : AppCompatActivity() {
             expression = ExpressionBuilder(equation).build()
         }
         catch(e: IllegalArgumentException){
+            return
+        }
+        catch(e: EmptyStackException){
             return
         }
 
